@@ -98,7 +98,46 @@ public:
         }
         cout << endl;
     }
-    
+    void deleteAtIndex(int index)
+    {
+        if (index < 0)
+            return;
+        if (head == NULL)
+            return;
+        Node *temp = head;
+        for (int i = 0; i < index - 1; i++)
+        {
+            if (temp->next == NULL)
+            {
+                cout << "No node at given index\n";
+                return;
+            }
+            temp = temp->next;
+        }
+        if (temp != head && temp->next == NULL)
+        {
+            cout << "No node at given index\n";
+            return;
+        }
+        if (temp == head)
+        {
+            head = temp->next;
+            if (head == NULL)
+                tail = NULL;
+            delete temp;
+            return;
+        }
+        if (temp->next == tail)
+        {
+            delete tail;
+            tail = temp;
+            tail->next = NULL;
+            return;
+        }
+        Node *delOne = temp->next;
+        temp->next = temp->next->next;
+        delete delOne;
+    }
 };
 int main()
 {
@@ -107,9 +146,19 @@ int main()
     List.push_front(6);
     List.push_back(1);
     List.push_back(2);
+    List.push_back(7);
+    List.push_back(8);
     List.printLinkedList();
     List.pop_front();
     List.printLinkedList();
     List.pop_back();
+    List.printLinkedList();
+    List.deleteAtIndex(-1);
+    List.printLinkedList();
+    List.deleteAtIndex(3);
+    List.printLinkedList();
+    List.deleteAtIndex(2);
+    List.printLinkedList();
+    List.deleteAtIndex(0);
     List.printLinkedList();
 }
