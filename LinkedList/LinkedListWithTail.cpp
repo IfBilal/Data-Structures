@@ -61,7 +61,8 @@ public:
         {
             Node *temp = head;
             head = head->next;
-            temp->next = NULL;
+            if (head == NULL)
+                tail = NULL;
             delete temp;
         }
     }
@@ -73,6 +74,12 @@ public:
         }
         else
         {
+            if (head == tail)
+            {
+                delete head;
+                head = tail = NULL;
+                return;
+            }
             Node *temp = head;
             while (temp->next != tail)
             {
@@ -100,9 +107,17 @@ public:
     }
     void deleteAtIndex(int index)
     {
-        if (index < 0)
+        if (index < 0 || head == NULL)
             return;
         Node *temp = head;
+        if (index == 0)
+        {
+            head = temp->next;
+            if (head == NULL)
+                tail = NULL;
+            delete temp;
+            return;
+        }
         for (int i = 0; i < index - 1; i++)
         {
             if (temp->next == NULL)
@@ -112,17 +127,9 @@ public:
             }
             temp = temp->next;
         }
-        if (temp != head && temp->next == NULL)
+        if (temp->next == NULL)
         {
             cout << "No node at given index\n";
-            return;
-        }
-        if (temp == head)
-        {
-            head = temp->next;
-            if (head == NULL)
-                tail = NULL;
-            delete temp;
             return;
         }
         if (temp->next == tail)
@@ -139,24 +146,4 @@ public:
 };
 int main()
 {
-    LinkedList List;
-    List.push_front(5);
-    List.push_front(6);
-    List.push_back(1);
-    List.push_back(2);
-    List.push_back(7);
-    List.push_back(8);
-    List.printLinkedList();
-    List.pop_front();
-    List.printLinkedList();
-    List.pop_back();
-    List.printLinkedList();
-    List.deleteAtIndex(-1);
-    List.printLinkedList();
-    List.deleteAtIndex(3);
-    List.printLinkedList();
-    List.deleteAtIndex(2);
-    List.printLinkedList();
-    List.deleteAtIndex(0);
-    List.printLinkedList();
 }
