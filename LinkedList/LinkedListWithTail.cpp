@@ -102,8 +102,6 @@ public:
     {
         if (index < 0)
             return;
-        if (head == NULL)
-            return;
         Node *temp = head;
         for (int i = 0; i < index - 1; i++)
         {
